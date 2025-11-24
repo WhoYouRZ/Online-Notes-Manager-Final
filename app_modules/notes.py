@@ -7,7 +7,8 @@ from flask import (
     redirect,
     url_for,
     flash,
-    jsonify
+    jsonify,
+    send_file
 )
 from flask_login import login_required, current_user
 
@@ -20,6 +21,7 @@ from .models import (
     search_notes,
     get_categories,
 )
+import io
 
 notes_bp = Blueprint("notes",  __name__, template_folder="../template", url_prefix="/notes")
 
@@ -179,3 +181,29 @@ def sync():
     return jsonify({"status": "success"})
 
 
+
+# ===============================================
+# DOWNLOAD NOTE AS .TXT
+# ===============================================
+@notes_bp.get("/notes/download/<int:note_id>")
+@login_required
+def download_note(note_id):
+    # Get note
+    note = get_note_by_id(note_id, current_user.id)
+
+    if not note:
+        flash("Note not found")
+        return redirect(url_for("notes.dashboard"))
+
+    # Prepare content
+    title = note["title"] or "Untitled"
+    content = note["content"] or ""
+
+    text_data = f"{title}\n\n{content}"
+
+    return send_file(
+        io.BytesIO(text_data.encode("utf-8")),
+        mimetype="text/plain",
+        as_attachment=True,
+        download_name=f"{title}.txt"
+    )

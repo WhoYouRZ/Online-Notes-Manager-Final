@@ -642,3 +642,177 @@ button, .btn-primary, .btn-secondary, .btn-small, .btn-small-danger {
 .modal-box button {
     margin-right: 10px;
 }
+
+
+/* =========================================================
+   RESPONSIVE LAYOUT
+========================================================= */
+
+/* Medium screens (tablets, small laptops) */
+@media (max-width: 992px) {
+    .dashboard-container,
+    .guest-container,
+    .category-page,
+    .edit-container {
+        max-width: 95%;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .notes-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+
+    .navbar {
+        padding: 12px 16px;
+    }
+}
+
+/* Small screens (phones) */
+@media (max-width: 768px) {
+
+    /* NAVBAR */
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .nav-right {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .nav-right a {
+        margin-left: 0;
+    }
+
+    /* AUTH PAGES */
+    .auth-container {
+        max-width: 90%;
+        padding: 20px;
+    }
+
+    /* DASHBOARD HEADER & SEARCH */
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .header-actions {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .search-form {
+        display: flex;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .search-form input {
+        flex: 1;
+    }
+
+    /* NOTES GRID */
+    .notes-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 14px;
+    }
+
+    .note-card {
+        padding: 14px;
+    }
+
+    /* GUEST PAGE */
+    .guest-container {
+        max-width: 95%;
+    }
+
+    .guest-editor {
+        padding: 16px;
+    }
+
+    /* CATEGORY PAGE */
+    .category-page {
+        max-width: 95%;
+        padding: 18px;
+    }
+
+    .category-form {
+        flex-direction: column;
+    }
+
+    .category-form input {
+        width: 100%;
+    }
+
+    /* EDIT NOTE PAGE */
+    .edit-container {
+        max-width: 95%;
+        padding: 20px;
+    }
+
+    .edit-title {
+        font-size: 1.4rem;
+    }
+
+    /* Buttons in forms on small screens */
+    .btn-primary,
+    .btn-secondary {
+        width: auto;
+    }
+}
+
+/* Extra small screens (very narrow phones) */
+@media (max-width: 480px) {
+
+    body {
+        font-size: 0.95rem;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .note-card {
+        padding: 12px;
+    }
+
+    .note-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .category-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .cat-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    /* Modals */
+    .modal-box {
+        width: 90%;
+        padding: 18px;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .modal-actions .btn-primary,
+    .modal-actions .btn-secondary {
+        width: 100%;
+        text-align: center;
+    }
+}

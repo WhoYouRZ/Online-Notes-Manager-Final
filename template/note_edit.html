@@ -91,6 +91,14 @@
             >
             <label for="pinned">Pin this note</label>
         </div>
+        {% if mode == 'edit' %}
+            <a 
+                class="btn-secondary"
+                href="{{ url_for('notes.download_note', note_id=note.id) }}"
+            >
+                Download Note
+            </a>
+        {% endif %}
 
         <!-- ACTION BUTTON -->
         <button type="submit" class="btn-primary">
