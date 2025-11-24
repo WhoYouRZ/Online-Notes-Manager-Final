@@ -1,0 +1,11 @@
+<header class="navbar">
+    <div class="nav-left">
+        <a href="{{ url_for('notes.dashboard') }}" class="logo">Notes Manager</a>
+    </div>
+
+    <nav class="nav-right">
+        <a href="{{ url_for('main.category_page') }}">Add Category</a>
+        <a href="{{ url_for('notes.create') }}">New Note</a>
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
+    </nav>
+</header>

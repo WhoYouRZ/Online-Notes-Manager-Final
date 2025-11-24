@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | Online Notes Manager{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-container">
+
+    <!-- HEADER + CREATE BUTTON -->
+    <div class="dashboard-header">
+        <h2>Your Notes</h2>
+
+        <div class="header-actions">
+            <form method="GET" action="{{ url_for('notes.dashboard') }}" class="search-form">
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Search notes..."
+                    value="{{ query }}"
+                >
+                <button type="submit" class="btn-search">Search</button>
+            </form>
+
+            <a href="{{ url_for('notes.create') }}" class="btn-primary">+ New Note</a>
+        </div>
+    </div>
+
+    <!-- CATEGORY LIST (Optional Filtering) -->
+    {% if categories %}
+    <div class="category-bar">
+        <span>Categories:</span>
+        {% for cat in categories %}
+            <span class="category-pill">{{ cat.name }}</span>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- NOTES GRID -->
+    <div class="notes-grid">
+
+        {% if notes %}
+            {% for note in notes %}
+            <div class="note-card {% if note.pinned %}pinned{% endif %}">
+                
+                <div class="note-card-header">
+                    <h3>{{ note.title or "Untitled" }}</h3>
+
+                    <!-- PIN BUTTON -->
+                    <button
+                        class="pin-btn"
+                        data-note-id="{{ note.id }}"
+                        data-pinned="{{ note.pinned }}"
+                        title="{{ 'Unpin' if note.pinned else 'Pin' }}"
+                    >
+                        {% if note.pinned %}
+                            ★
+                        {% else %}
+                            ☆
+                        {% endif %}
+                    </button>
+                </div>
+
+                <p class="note-content">
+                    {{ note.content[:200] }}{% if note.content|length > 200 %}...{% endif %}
+                </p>
+
+                {% if note.reminder %}
+                <p class="note-reminder">
+                    Reminder: {{ note.reminder }}
+                </p>
+                {% endif %}
+
+                <div class="note-footer">
+                    <span class="note-category">
+                        {{ note.category_name if note.category_name else "No Category" }}
+                    </span>
+
+                    <div class="note-actions">
+                        <a href="{{ url_for('notes.edit', note_id=note.id) }}" class="btn-small">Edit</a>
+
+                        <form action="{{ url_for('notes.delete', note_id=note.id) }}" method="POST" onsubmit="return confirm('Delete this note?');">
+                            <button type="submit" class="btn-small-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-notes">No notes found. Create your first one!</p>
+        {% endif %}
+
+    </div>
+</div>
+
+<!-- Pin Button AJAX Logic -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const pinButtons = document.querySelectorAll(".pin-btn");
+
+    pinButtons.forEach(btn => {
+        btn.addEventListener("click", async () => {
+            const noteId = btn.dataset.noteId;
+
+            const response = await fetch(`/notes/pin/${noteId}`, {
+                method: "POST"
+            });
+
+            const data = await response.json();
+
+            if (data.status === "success") {
+                location.reload(); // Refresh to reorder pinned notes
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

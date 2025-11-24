@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Guest Notes | Online Notes Manager{% endblock %}
+
+{% block content %}
+
+<div class="guest-container">
+
+    <!-- HEADER & MESSAGE -->
+    <div class="guest-header">
+        <h2>Your Notes (Guest Mode)</h2>
+        <p class="guest-info">
+            You are using guest mode. Notes are stored in your browser only.
+            <br>
+            <a href="{{ url_for('auth.login') }}">Login</a> to sync notes across devices.
+        </p>
+    </div>
+
+    <!-- CREATE NOTE AREA -->
+    <div class="guest-editor">
+
+        <input 
+            type="text" 
+            id="guest-title" 
+            placeholder="Title"
+        >
+
+        <textarea 
+            id="guest-content" 
+            rows="5"
+            placeholder="Write your note here..."
+        ></textarea>
+
+        <button id="guest-save-btn" class="btn-primary">
+            Save Note
+        </button>
+    </div>
+
+    <hr class="divider">
+
+    <!-- NOTES LIST -->
+    <h3>Your Saved Notes</h3>
+
+    <div id="guest-notes-list" class="notes-grid">
+        <!-- JS will load notes here dynamically -->
+    </div>
+
+</div>
+
+<!-- Load Guest Mode Scripts -->
+<script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/autosave.js') }}" defer></script>
+
+{% endblock %}
