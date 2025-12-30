@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Manage Categories{% endblock %}
+
+{% block content %}
+
+<div class="category-page">
+
+    <h2>Manage Categories</h2>
+    <p class="sub-text">Add, rename, or remove your categories.</p>
+
+    <!-- Add New Category -->
+    <div class="category-form">
+        <form id="add-category-form">
+            <input 
+                type="text" 
+                id="new-category-name" 
+                placeholder="New category name"
+                required
+            >
+            <button class="btn-primary" type="submit">Add</button>
+        </form>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Category List -->
+    <div id="category-list" class="category-list">
+        <!-- Loaded dynamically by JavaScript -->
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/categories.js') }}" defer></script>
+
+<!-- Rename Category Modal -->
+<div id="rename-modal" class="modal-overlay">
+    <div class="modal-box">
+        <h3>Rename Category</h3>
+
+        <input 
+            type="text" 
+            id="rename-category-input" 
+            placeholder="New category name"
+        >
+
+        <button id="rename-confirm-btn" class="btn-primary">Save</button>
+        <button id="rename-cancel-btn" class="btn-secondary">Cancel</button>
+    </div>
+</div>
+
+
+{% endblock %}

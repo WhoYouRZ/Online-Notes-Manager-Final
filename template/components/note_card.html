@@ -1,0 +1,68 @@
+<div class="note-card {% if note.pinned %}pinned{% endif %}" data-note-id="{{ note.id }}">
+
+    <!-- HEADER -->
+    <div class="note-card-header">
+        <h3 class="note-title">{{ note.title or "Untitled" }}</h3>
+
+        <!-- PIN BUTTON -->
+        <button
+            class="pin-btn"
+            data-note-id="{{ note.id }}"
+            data-pinned="{{ note.pinned }}"
+            title="{{ 'Unpin' if note.pinned else 'Pin' }}"
+        >
+            {% if note.pinned %}
+                ★
+            {% else %}
+                ☆
+            {% endif %}
+        </button>
+    </div>
+
+    <!-- CONTENT PREVIEW -->
+    <p class="note-content">
+        {{ note.content[:200] }}{% if note.content|length > 200 %}...{% endif %}
+    </p>
+
+    <!-- REMINDER -->
+    {% if note.reminder %}
+        <p class="note-reminder">Reminder: {{ note.reminder }}</p>
+    {% endif %}
+
+    
+
+    <!-- FOOTER -->
+    <div class="note-footer">
+
+        <span class="note-category">
+            {{ note.category_name if note.category_name else "No Category" }}
+        </span>
+
+        <div class="note-actions">
+            <a 
+                class="btn-small" 
+                href="{{ url_for('notes.download_note', note_id=note.id) }}"
+            >
+                Download
+            </a>
+            <a
+                href="{{ url_for('notes.edit', note_id=note.id) }}"
+                class="btn-small"
+            >
+                Edit
+            </a>
+
+            <form
+                action="{{ url_for('notes.delete', note_id=note.id) }}"
+                method="POST"
+                onsubmit="return confirm('Delete this note?');"
+            >
+                <button type="submit" class="btn-small-danger">
+                    Delete
+                </button>
+            </form>
+            
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Online Notes Manager{% endblock %}</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Core JS for all pages -->
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/categories_note_editor.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/categories_note_editor.js') }}" defer></script>
+
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    {% if current_user.is_authenticated %}
+        {% include "components/navbar_user.html" %}
+    {% else %}
+        {% include "components/navbar_guest.html" %}
+    {% endif %}
+
+
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="flash-container">
+        {% for msg in messages %}
+        <div class="flash-message">{{ msg }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+</html>

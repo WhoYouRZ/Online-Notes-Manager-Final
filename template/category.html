@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Manage Categories{% endblock %}
+
+{% block content %}
+
+<div class="category-page">
+
+    <h2 class="page-title">Manage Your Categories</h2>
+    <p class="sub-text">
+        Create, rename, and delete your categories.  
+        These categories can be used when creating or organizing notes.
+    </p>
+
+    <!-- Add Category -->
+    <form id="add-category-form" class="category-form">
+        <input 
+            type="text" 
+            id="new-category-name" 
+            placeholder="Enter new category name"
+            required
+        >
+        <button type="submit" class="btn-primary">Add</button>
+    </form>
+
+    <hr class="divider">
+
+    <!-- Category List -->
+    <h3>Your Categories</h3>
+
+    <div id="category-list" class="category-list">
+        <!-- JS will render categories here -->
+    </div>
+
+</div>
+
+
+<!-- Rename Modal -->
+<div id="rename-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-box">
+        <h3>Rename Category</h3>
+
+        <input 
+            type="text" 
+            id="rename-category-input" 
+            placeholder="New category name"
+        >
+
+        <div class="modal-actions">
+            <button id="rename-confirm-btn" class="btn-primary">Save</button>
+            <button id="rename-cancel-btn" class="btn-secondary">Cancel</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Load Categories JS -->
+<script src="{{ url_for('static', filename='js/categories.js') }}" defer></script>
+
+{% endblock %}
